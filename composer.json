@@ -1,0 +1,18 @@
+{
+    "require": {
+    	"symfony/http-foundation": "2.3.*@dev",
+        "pimple/pimple": "1.0.*@dev",
+        "bistro/router": "1.0.*",
+        "underscore/underscore.php": "dev-master",
+        "filp/whoops": "1.*"
+    },
+   "autoload": {
+        "psr-0": { 
+        	"Core": "system/",
+        	"App": "app/"
+        }
+    },
+    "config": { 
+    	"vendor-dir": "system/vendor/" 
+  	} 
+}
