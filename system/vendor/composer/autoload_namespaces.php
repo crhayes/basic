@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
+    'Whoops' => array($vendorDir . '/filp/whoops/src'),
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
     'Core' => array($baseDir . '/system'),

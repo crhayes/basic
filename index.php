@@ -36,6 +36,26 @@ Config::setConfigDirectory(APP_PATH.'config'.DS);
 require APP_PATH.'bootstrap'.EXT;
 require APP_PATH.'routes'.EXT;
 
+
+
+
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Handler\JsonResponseHandler;
+
+$run     = new Whoops\Run;
+$handler = new PrettyPageHandler;
+
+$handler->setPageTitle("We're all going to be fired!");
+
+$run->pushHandler($handler);
+
+$run->register();
+
+
+
+
+
+
 $users = Database::query('SELECT * FROM user');
 
 foreach ($users as $user) {

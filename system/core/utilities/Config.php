@@ -35,6 +35,10 @@ class Config
 
         list($fileKeyPath, $configItemKeyPath) = self::parseKeyPath($keyPath);
 
+        if ( ! self::isConfigFile($fileKeyPath)) {
+            throw new \Exception('Config file ' . self::getFilePath($fileKeyPath) . ' does not exist');
+        }
+
         $filePath = self::getFilePath($fileKeyPath);
 
         if ( ! array_key_exists($fileKeyPath, self::$loadedFiles)) {
