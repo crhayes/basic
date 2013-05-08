@@ -1,6 +1,3 @@
 <?php
 
-$app['router']->add('home', '/')->defaults(array(
-    'controller' => 'welcome',
-    'action' => 'view'
-));
+Route::get('home', '/', 'App\\Controllers\\HomeController@getIndex');

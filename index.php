@@ -22,49 +22,25 @@ require SYS_PATH.'vendor/autoload'.EXT;
 require SYS_PATH.'helpers'.EXT;
 
 // --------------------------------------------------------------
+// Create a new application instance.
+// --------------------------------------------------------------
+$app = new Core\Application();
+
+// --------------------------------------------------------------
 // Register class aliases
 // --------------------------------------------------------------
-class_alias('Core\Utilities\Arr', 'Arr');
-class_alias('Core\Utilities\Config', 'Config');
-class_alias('Core\Support\Facades\Database', 'Database');
-
-Config::setConfigDirectory(APP_PATH.'config'.DS);
+$app->registerAliases();
 
 // --------------------------------------------------------------
-// Bootstrap the application.
+// Register error handler
 // --------------------------------------------------------------
-require APP_PATH.'bootstrap'.EXT;
-require APP_PATH.'routes'.EXT;
+$app->registerErrorHandler();
 
+// --------------------------------------------------------------
+// Set the application instance for the facade support class
+// --------------------------------------------------------------
+Core\Support\Facade::setApplicationInstance($app);
 
+$response = $app->routeRequest();
 
-
-use Whoops\Handler\PrettyPageHandler;
-use Whoops\Handler\JsonResponseHandler;
-
-$run     = new Whoops\Run;
-$handler = new PrettyPageHandler;
-
-$handler->setPageTitle("We're all going to be fired!");
-
-$run->pushHandler($handler);
-
-$run->register();
-
-
-
-
-
-
-$users = Database::query('SELECT * FROM user');
-
-foreach ($users as $user) {
-	echo $user->email . '<br>';
-}
-
-$method = $_SERVER['REQUEST_METHOD'];
-$uri = isset($_SEVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
-
-$params = $app['router']->match($method, $uri);
- 
-$app['response']->send();
+$app['response']->setContent($response)->send();

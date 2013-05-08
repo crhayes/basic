@@ -34,7 +34,7 @@ class Database
 		try {
 			$this->connection = new PDO("mysql:host=$host;dbname=$database", $username, $password);
 		} catch (PDOException $e) {
-		    die("Database Error: " . $e->getMessage());
+		    throw new DatabaseConnectionException('Incorrect database credentials provided');
 		}
 	}
 
