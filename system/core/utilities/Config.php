@@ -12,44 +12,68 @@ class Config
     public static $loadedFiles = array();
 
     /**
-     * Load a configuration file and store it in an array.
+     * The directory our config files are stored in.
      * 
-     * @param   string  $fileName  Name of the config file to load.
+     * @var string
      */
-    public static function load($fileName)
-    {
-        // Load a single file
-        if ( ! is_array($fileName)) {
-            return self::loadFile($fileName);
-        }
-
-        // If we have an array load each file
-        foreach ($fileName as $file) {
-            self::loadFile($file);
-        }
-    }
+    private static $configDirectory;
 
     /**
-     * Get a configuration item from an array using "dot" notation.
+     * Set the config directory.
      * 
-     * @param   string  $keys   Path using dot notation.
-     * @param   mixed   $default   
-     * @return  mixed 
+     * @param string $directory
      */
-    public static function get($keys, $default = null)
+    public static function setConfigDirectory($directory)
     {
-        $config = self::$loadedFiles;
-        
-        // If there are no parameters we send back the whole config array.
-        if (is_null($keys)) return $config;
-        
-        return Arr::get($keys, $config, $default);
+        self::$configDirectory = $directory;
     }
 
-    private static function loadFile($fileName)
+    public static function get($keyPath, $default = null)
     {
-        if (file_exists($path = APP_PATH.'config'.DS.str_replace('.', '/', $fileName).EXT)) {
-            self::$loadedFiles = self::$loadedFiles + Arr::set($fileName, require_once($path));
+        // If there are no parameters we send back the whole config array.
+        if (is_null($keyPath)) return self::$loadedFiles;
+
+        list($fileKeyPath, $configItemKeyPath) = self::parseKeyPath($keyPath);
+
+        $filePath = self::getFilePath($fileKeyPath);
+
+        if ( ! array_key_exists($fileKeyPath, self::$loadedFiles)) {
+          self::loadFile($fileKeyPath, $filePath);
         }
+
+        $requestedConfig = self::$loadedFiles[$fileKeyPath];
+
+        return Arr::get($configItemKeyPath, $requestedConfig, $default);
+    }
+
+    private static function loadFile($key, $file)
+    {
+        self::$loadedFiles = self::$loadedFiles + array($key => require_once($file));
+    }
+
+    private static function parseKeyPath($keyPath)
+    {
+        $fileKeyPath = $keyPath;
+
+        while ($delimiterPos = strrpos($fileKeyPath, '.')) {
+            $fileKeyPath = substr($fileKeyPath, 0, $delimiterPos);
+            $configItemKeyPath = substr($keyPath, $delimiterPos+1, strlen($keyPath));
+
+            if (self::isConfigFile($fileKeyPath)) {
+                break;
+            }
+        }
+
+        return array($fileKeyPath, $configItemKeyPath);
+    }
+
+    private static function isConfigFile($fileKeyPath)
+    {
+        return is_file(self::getFilePath($fileKeyPath));
+    }
+
+    private static function getFilePath($fileKeyPath)
+    {
+        return self::$configDirectory.(str_replace('.', '/', $fileKeyPath)).EXT;
     }
 }
