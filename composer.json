@@ -4,8 +4,9 @@
         "pimple/pimple": "1.0.*@dev",
         "bistro/router": "1.0.*",
         "phpseclib/phpseclib": "0.3.*@dev",
-        "underscore/underscore.php": "dev-master",
-        "filp/whoops": "1.*"
+        "twig/twig": "1.13.*@dev",
+        "filp/whoops": "1.*",
+        "underscore/underscore.php": "dev-master"
     },
    "autoload": {
         "psr-0": { 

@@ -1,7 +1,7 @@
 <?php
 
 error_reporting(-1);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 // --------------------------------------------------------------
 // Create aliases for ease of use.
@@ -21,7 +21,7 @@ define('BASE_PATH', substr(DOC_ROOT, strlen($_SERVER['DOCUMENT_ROOT'])));
 // --------------------------------------------------------------
 // Load the autoloader and helper functions.
 // --------------------------------------------------------------
-require SYS_PATH.'vendor/autoload'.EXT;
+require SYS_PATH.'autoload'.EXT;
 require SYS_PATH.'helpers'.EXT;
 
 // --------------------------------------------------------------
@@ -44,6 +44,11 @@ $app->registerErrorHandler();
 // --------------------------------------------------------------
 Core\Support\Facade::setApplicationInstance($app);
 
+require APP_PATH.'bootstrap'.EXT;
+
 $response = $app->routeRequest();
+
+
+$response = View::make('index', array('name' => 'Chris'))->send();
 
 $app['response']->setContent($response)->send();

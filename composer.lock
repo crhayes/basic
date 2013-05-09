@@ -1,9 +1,5 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
-    ],
-    "hash": "c8a064ea251a6db0c96621bd2dd78d66",
+    "hash": "df6ae06c5511cc483fd74d70123d4e7c",
     "packages": [
         {
             "name": "bistro/router",
@@ -271,6 +267,55 @@
             "time": "2013-05-06 08:11:45"
         },
         {
+            "name": "twig/twig",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "4d90a5008d2c2cc30f5e5c8622e979674178bf6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/4d90a5008d2c2cc30f5e5c8622e979674178bf6c",
+                "reference": "4d90a5008d2c2cc30f5e5c8622e979674178bf6c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2013-05-07 18:59:51"
+        },
+        {
             "name": "underscore/underscore.php",
             "version": "dev-master",
             "source": {
@@ -318,6 +363,7 @@
         "symfony/http-foundation": 20,
         "pimple/pimple": 20,
         "phpseclib/phpseclib": 20,
+        "twig/twig": 20,
         "underscore/underscore.php": 20
     },
     "platform": [

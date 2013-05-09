@@ -7,6 +7,8 @@ return array(
 		'Config' 		=> 'Core\Utilities\Config',
 		'Controller' 	=> 'Core\Controller',
 		'Database'		=> 'Core\Support\Facades\Database',
-		'Route'			=> 'Core\Support\Facades\Route'
+		'Image'			=> 'Core\Utilities\Image',
+		'Route'			=> 'Core\Support\Facades\Route',
+		'View'			=> 'Core\Support\Facades\View',
 	)
 );

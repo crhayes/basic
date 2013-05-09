@@ -58,10 +58,10 @@ class RouteGenerator
 		));
 	}
 
-	public function __call($name, $arguments)
+	public function match($method, $url)
 	{
-		$this->createRoute('add', $name, '.*', 'Core\\Controller', 'missingMethod');
+		$this->createRoute('add', 'default', '.*', 'Core\\Controller', 'missingMethod');
 
-		return call_user_func_array(array($this->router, $name), $arguments);
+		return $this->router->match($method, $url);
 	}
 }

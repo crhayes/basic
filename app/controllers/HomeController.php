@@ -6,6 +6,6 @@ class HomeController extends \Controller
 {
 	public function getIndex()
 	{
-		return 'Home Controller Get Index';
+		//dd(\Database::query('SELECT * FROM user'));
 	}
 }

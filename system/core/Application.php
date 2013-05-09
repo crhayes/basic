@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\View\View;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Support\Facade;
@@ -35,6 +36,10 @@ class Application extends \Pimple
 
 		$app['database'] = function($app) {
 			return new Database(Config::get('database.credentials'));
+		};
+
+		$app['view'] = function($app) {
+			return new View($app);
 		};
 	}
 
