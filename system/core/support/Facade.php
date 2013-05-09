@@ -12,9 +12,11 @@ class Facade
 	}
 
 	public static function __callStatic($method, $arguments)
-	{
-		$class = static::getFacadeAccessor();
-		
-		return call_user_func_array(array(self::$app[$class], $method), $arguments);
+	{		
+		$class = (($class = static::getFacadeAccessor()) == 'app') 
+			? array(self::$app, $method) 
+			: array(self::$app[$class], $method);
+
+		return call_user_func_array($class, $arguments);
 	}
 }

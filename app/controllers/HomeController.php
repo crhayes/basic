@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-class HomeController
+class HomeController extends \Controller
 {
 	public function getIndex()
 	{
-		return 'Home Controller Get Index' . $hey;
+		return 'Home Controller Get Index';
 	}
 }

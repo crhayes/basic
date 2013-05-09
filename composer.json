@@ -10,7 +10,7 @@
    "autoload": {
         "psr-0": { 
         	"Core": "system/",
-        	"App": "/"
+        	"App": ""
         }
     },
     "config": { 

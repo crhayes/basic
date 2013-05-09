@@ -4,14 +4,12 @@ namespace Core;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Routing\Router;
 use Core\Support\Facade;
 use Core\Utilities\Config;
 use Core\Database\Database;
+use Core\Routing\RouteGenerator;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\JsonResponseHandler;
-
-
 
 class Application extends \Pimple
 {
@@ -23,21 +21,33 @@ class Application extends \Pimple
 
 		$app = $this;
 
-		$app['router'] = $app->share(function($c) {
-			return new Router();
+		$app['router'] = $app->share(function($app) {
+			return new RouteGenerator($app, new \Bistro\Router\Router);
 		});
 
-		$app['request'] = $app->share(function($c) {
+		$app['request'] = $app->share(function($app) {
 			return Request::createFromGlobals();
 		});
 
-		$app['response'] = $app->share(function($c) {
+		$app['response'] = $app->share(function($app) {
 			return new Response();
 		});
 
-		$app['database'] = function($c) {
+		$app['database'] = function($app) {
 			return new Database(Config::get('database.credentials'));
 		};
+	}
+
+	public function bind($name, $callback)
+	{
+		if (is_callable($callback)) {
+			$this[$name] = $callback($this);
+		}
+	}
+
+	public function get($name)
+	{
+		return $this[$name];
 	}
 
 	public function registerAliases()
@@ -61,12 +71,18 @@ class Application extends \Pimple
 		$whoops->register();
 	}
 
-	public function routeRequest()
+	public function routeRequest($params = null)
 	{
 		require APP_PATH.'routes'.EXT;
 
-		$params = $this['router']->match($this['request']->server->get('REQUEST_METHOD'), $this['request']->getPathInfo());
-		
-		return call_user_func_array(array($params['controller'], $params['action']), explode('/', $params['params']));
+		$route = $this['router']->match($this['request']->server->get('REQUEST_METHOD'), $this['request']->getPathInfo());
+
+		$controller = new $route['controller']($this, $route);
+
+		$response = $controller->before();
+        $response = (is_null($response)) ? $controller->execute() : $response;
+        $controller->after();
+
+        return $response;
 	}
 }

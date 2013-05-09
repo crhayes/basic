@@ -1,5 +1,9 @@
 {
-    "hash": "98ed034d951d2379ac4f820bd145d4c4",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "c8a064ea251a6db0c96621bd2dd78d66",
     "packages": [
         {
             "name": "bistro/router",
@@ -102,12 +106,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "9ac94a7b749077a221e4cbb57f8f4885a4b645ed"
+                "reference": "aa3e6c1a9990bcc332fa052f1d4be2849e787616"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9ac94a7b749077a221e4cbb57f8f4885a4b645ed",
-                "reference": "9ac94a7b749077a221e4cbb57f8f4885a4b645ed",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/aa3e6c1a9990bcc332fa052f1d4be2849e787616",
+                "reference": "aa3e6c1a9990bcc332fa052f1d4be2849e787616",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +172,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2013-05-08 12:19:49"
+            "time": "2013-05-08 19:13:18"
         },
         {
             "name": "pimple/pimple",
