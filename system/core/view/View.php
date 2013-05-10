@@ -2,27 +2,32 @@
 
 namespace Core\View;
 
+class InvalidViewProviderException extends \Exception {}
+
 class View extends \Symfony\Component\HttpFoundation\Response
 {
 	private $app;
 
-	private $twig;
+	private $viewPath;
 
-	private $view;
+	private $viewProvider = 'scenic';
+
+	private $viewName;
 
 	private $data = array();
 
-	public function __construct($app)
+	public function __construct($viewName, $data = array())
 	{
-		$this->app = $app;
+		$this->viewPath = APP_PATH.'views'.DS;
 
-		/*
-		$loader = new \Twig_Loader_Filesystem(APP_PATH.'views');
-		$this->twig = new \Twig_Environment($loader, array(
-		    'cache' => APP_PATH.'storage/views',
-		));
-		*/
-		
+		$this->viewName = $viewName;
+
+		$this->data = $data;
+	}
+
+	public function make($viewName, $data = array())
+	{
+		return new View($viewName, $data);
 	}
 
 	public function with($key, $value)
@@ -32,19 +37,31 @@ class View extends \Symfony\Component\HttpFoundation\Response
 		return $this;
 	}
 
-	public function make($view, $data = array())
+	public function setViewProvider($viewProvider)
 	{
-		$this->view = str_replace('.', '/', $view).EXT;
-
-		$this->data = $data;
+		$this->viewProvider = $viewProvider;
 
 		return $this;
 	}
 
+	public function getViewProvider()
+	{
+		switch(strtolower($this->viewProvider)) {
+			case 'twig':
+				return new Providers\TwigViewProvider();
+			case 'scenic':
+				return new Providers\ScenicViewProvider();
+			default:
+				throw new InvalidViewProviderException("'$this->viewProvider' is not a valid view provider");
+		}
+	}
+
 	public function send()
 	{
-		//echo $this->twig->render('index.php', array('name' => 'Fabien'));
-		//
-		$view = \Core\View\SwiftTemplate::make('index', array())->send();
+		$provider = $this->getViewProvider();
+
+		$provider->initialize();
+
+		return $provider->render($this->viewName, $this->data);
 	}
 }

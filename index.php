@@ -48,7 +48,6 @@ require APP_PATH.'bootstrap'.EXT;
 
 $response = $app->routeRequest();
 
-
-$response = View::make('index', array('name' => 'Chris'))->send();
+$response = View::make('index.php', array('title' => 'This is awesome'))->send();
 
 $app['response']->setContent($response)->send();

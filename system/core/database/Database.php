@@ -5,6 +5,8 @@ namespace Core\Database;
 use PDO;
 use PDOException;
 
+class DatabaseConnectionException extends \Exception {}
+
 class Database
 {
 	/**

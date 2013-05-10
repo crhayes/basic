@@ -6,7 +6,8 @@
         "phpseclib/phpseclib": "0.3.*@dev",
         "twig/twig": "1.13.*@dev",
         "filp/whoops": "1.*",
-        "underscore/underscore.php": "dev-master"
+        "underscore/underscore.php": "dev-master",
+        "crhayes/scenic-view": "dev-master"
     },
    "autoload": {
         "psr-0": { 
